@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "104981265667",
+    "project_id": "illaapp-198db",
+    "storage_bucket": "illaapp-198db.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:104981265667:android:a77dc3a0c36b5fdec8fd36",
+        "android_client_info": {
+          "package_name": "com.example.illaapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIzQlD8n0WkMWVDWpZmjl6cY6-yMrIaN8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
