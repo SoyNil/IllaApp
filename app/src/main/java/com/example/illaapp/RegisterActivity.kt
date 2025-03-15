@@ -9,6 +9,7 @@ import androidx.activity.ComponentActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import android.widget.ImageButton
 
 class RegisterActivity : ComponentActivity() {
 
@@ -28,6 +29,11 @@ class RegisterActivity : ComponentActivity() {
         val etCorreo = findViewById<EditText>(R.id.etCorreo)
         val etContraseña = findViewById<EditText>(R.id.etContraseña)
         val btnRegistrar = findViewById<Button>(R.id.btnRegistrar)
+        val btnBack = findViewById<ImageButton>(R.id.btnBack)
+        btnBack.setOnClickListener {
+            finish() // Vuelve a la actividad anterior
+        }
+
 
         btnRegistrar.setOnClickListener {
             val nombre = etNombre.text.toString()
@@ -40,10 +46,11 @@ class RegisterActivity : ComponentActivity() {
                 auth.createUserWithEmailAndPassword(correo, contraseña)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
+                            val userId = auth.currentUser?.uid ?: return@addOnCompleteListener
+
                             database.get().addOnSuccessListener { snapshot ->
                                 val cantidadPsicologos = snapshot.childrenCount.toInt()
                                 val nuevoId = cantidadPsicologos + 1
-                                val psicologoNumero = "Psicologo$nuevoId" // Cambiado para ser el nombre del nodo
                                 val ocupacion = 2
 
                                 val user = hashMapOf(
@@ -55,7 +62,8 @@ class RegisterActivity : ComponentActivity() {
                                     "ocupacion" to ocupacion
                                 )
 
-                                database.child(psicologoNumero).setValue(user) // Cambiado el nombre del nodo
+                                // Guardar el usuario bajo su UID
+                                database.child(userId).setValue(user)
                                     .addOnSuccessListener {
                                         Toast.makeText(this, "Registro exitoso", Toast.LENGTH_SHORT).show()
                                         val intent = Intent(this, LoginActivity::class.java)
